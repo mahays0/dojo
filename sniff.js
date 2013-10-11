@@ -44,16 +44,8 @@ define(["./has"], function(has){
 				has.add("opera", tv >= 9.8 ? parseFloat(dua.split("Version/")[1]) || tv : tv);
 			}
 
-			// Mozilla and firefox
-			if(dua.indexOf("Gecko") >= 0 && !has("khtml") && !has("webkit")){
-				has.add("mozilla", tv);
-			}
-			if(has("mozilla")){
-				//We really need to get away from this. Consider a sane isGecko approach for the future.
-				has.add("ff", parseFloat(dua.split("Firefox/")[1] || dua.split("Minefield/")[1]) || undefined);
-			}
-
 			var isIE = 0;
+
 			if(document.all && !has("opera")){
 				// IE < 11
 				isIE = parseFloat(dav.split("MSIE ")[1]) || undefined;
@@ -74,6 +66,15 @@ define(["./has"], function(has){
 				}
 
 				has.add("ie", isIE);
+			}
+			
+			// Mozilla and firefox
+			if(!has("ie") && dua.indexOf("Gecko") >= 0 && !has("khtml") && !has("webkit")){
+				has.add("mozilla", tv);
+			}
+			if(has("mozilla")){
+				//We really need to get away from this. Consider a sane isGecko approach for the future.
+				has.add("ff", parseFloat(dua.split("Firefox/")[1] || dua.split("Minefield/")[1]) || undefined);
 			}
 
 			// Wii
